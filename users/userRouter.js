@@ -3,6 +3,7 @@ const users = require("./userDb");
 const posts = require("../posts/postDb");
 const router = express.Router();
 
+//posting new user
 router.post("/", validateUser(), (req, res, next) => {
   users
     .insert(req.body)
@@ -14,8 +15,9 @@ router.post("/", validateUser(), (req, res, next) => {
     });
 });
 
+//posting a new post for a specific user 
 router.post("/:id/posts", validateUserId(), validatePost(),(req, res, next) => {
-const objectToSend = {name: req.body.name, id: req.params.id }
+const objectToSend = { text: req.body.text, user_id: req.params.id }
 
 posts.insert(objectToSend)
 .then(post => {
@@ -76,6 +78,7 @@ router.delete("/:id", validateUserId(), (req, res, next) => {
 
 });
 
+//changing user info 
 router.put("/:id", validateUserId(), validateUser(), (req, res, next) => {
 users.update(req.params.id, req.body)
 .then(user => {
@@ -113,13 +116,15 @@ return (req, res, next) => {
 function validatePost() {
   return (req, res, next) => {
     if(!req.body) {
-      return res.status(400).json({message: "missing post data"})
+       res.status(400).json({message: "missing post data"})
     }
     else if(!req.body.text) {
-      return res.status(400).json({message: "missing required text field" })
+       res.status(400).json({message: "missing required text field" })
 
     }
+    else {
     next()
+    }
   };
 
 }

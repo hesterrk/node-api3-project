@@ -2,6 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 
+//MOVE ALL THE POST ROUTES IN USER INTO HERE 
+//MAKE THESE A SUB-ROUTER ON THE USER ROUTER
+
 router.get('/', (req, res) => {
   // do your magic!
 });
