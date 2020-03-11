@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors')
 
 const server = express();
 const helmet = require("helmet");
@@ -8,6 +9,8 @@ const postRouter = require("./posts/postRouter")
 server.use(logger);
 server.use(helmet());
 server.use(express.json());
+server.use(cors())
+
 
 //User Route
 server.use("/api/users", userRouter);
